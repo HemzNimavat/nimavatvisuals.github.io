@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nimavat Visuals — Selected Work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0F0D0B;
+    --panel: #18140F;
+    --panel-hi: #211B14;
+    --ivory: #F3EEE4;
+    --muted: #9C9184;
+    --brass: #C08A2E;
+    --brass-dim: #8C6A2A;
+    --sage: #6C8A7C;
+    --line: rgba(243,238,228,0.10);
+    --line-hi: rgba(243,238,228,0.22);
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ivory);
+    font-family:'Inter', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.serif{ font-family:'Fraunces', serif; font-weight:500; letter-spacing:-0.01em; }
+  a{ color:inherit; }
+  img,video{ display:block; max-width:100%; }
+
+  /* reduced motion */
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:0.001ms !important; transition-duration:0.001ms !important; }
+  }
+
+  /* ---------- top nav ---------- */
+  .nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px clamp(20px,5vw,64px);
+    background:linear-gradient(to bottom, rgba(15,13,11,0.9), rgba(15,13,11,0));
+    pointer-events:none;
+  }
+  .nav *{ pointer-events:auto; }
+  .brand{ font-family:'Fraunces', serif; font-size:19px; font-weight:500; }
+  .brand span{ color:var(--brass); }
+  .nav-links{ display:flex; gap:28px; font-size:14px; color:var(--muted); }
+  .nav-links a{ text-decoration:none; transition:color .2s; }
+  .nav-links a:hover{ color:var(--ivory); }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    height:100vh;
+    min-height:560px;
+    display:flex;
+    align-items:flex-end;
+    overflow:hidden;
+    border-bottom:1px solid var(--line);
+  }
+  .hero video{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit:cover;
+    filter:brightness(0.55) saturate(0.9);
+  }
+  .hero::after{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(to top, rgba(15,13,11,0.95) 0%, rgba(15,13,11,0.35) 45%, rgba(15,13,11,0.55) 100%);
+  }
+  .hero-inner{
+    position:relative; z-index:2;
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:40px;
+    padding:0 clamp(20px,5vw,64px) 64px;
+  }
+  .hero-title{
+    font-size:clamp(38px, 6.4vw, 84px);
+    line-height:1.02;
+    max-width:14ch;
+    margin:0 0 18px;
+  }
+  .hero-sub{
+    font-size:16px;
+    color:var(--muted);
+    max-width:46ch;
+    line-height:1.6;
+    margin:0;
+  }
+  .hero-meta{
+    text-align:right;
+    font-size:14px;
+    color:var(--muted);
+    line-height:1.8;
+    white-space:nowrap;
+  }
+  .hero-meta strong{ color:var(--ivory); font-weight:500; }
+
+  /* ---------- section shell ---------- */
+  section{ padding:96px clamp(20px,5vw,64px); }
+  .section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:24px;
+    margin-bottom:44px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:28px;
+  }
+  .section-head h2{ font-size:clamp(26px,3vw,38px); margin:0; }
+  .section-head p{ color:var(--muted); font-size:15px; max-width:40ch; margin:8px 0 0; line-height:1.6; }
+
+  /* ---------- filter tabs ---------- */
+  .tabs{
+    display:flex; gap:26px; flex-wrap:wrap;
+    margin-bottom:40px;
+  }
+  .tab{
+    background:none; border:none; cursor:pointer;
+    font-family:'Inter'; font-size:15px; color:var(--muted);
+    padding:0 0 8px; border-bottom:2px solid transparent;
+    transition:color .2s, border-color .2s;
+  }
+  .tab:hover{ color:var(--ivory); }
+  .tab.active{ color:var(--ivory); border-color:var(--brass); }
+
+  /* ---------- grid ---------- */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:28px;
+  }
+  @media (max-width:980px){ .grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:640px){ .grid{ grid-template-columns:1fr; } }
+
+  .card{
+    position:relative;
+    cursor:pointer;
+    background:var(--panel);
+    border:1px solid var(--line);
+    overflow:hidden;
+    transition:border-color .25s;
+  }
+  .card:hover{ border-color:var(--line-hi); }
+  .card .thumb{
+    position:relative;
+    width:100%;
+    aspect-ratio:4/5;
+    overflow:hidden;
+    background:#000;
+  }
+     .card .thumb{
+    position:relative;
+    width:100%;
+    aspect-ratio:4/5;
+    overflow:hidden;
+    background:#000;
+  }
+  .card.wide .thumb{
+    aspect-ratio:16/10;
+    display:flex;
+    align-items:center;      /* vertical center */
+    justify-content:center;  /* horizontal center */
+  }
+  .card .thumb img{
+    width:100%; height:100%; object-fit:cover;
+    transition:transform .6s ease;
+  }
+  .card.wide .thumb img{
+    width:auto;
+    height:auto;
+    max-width:100%;
+    max-height:100%;
+    object-fit:contain;
+  }
+  .card:hover .thumb img{ transform:scale(1.04); }
+  
+  .play{
+    position:absolute; left:16px; bottom:16px;
+    width:34px; height:34px;
+    border-radius:50%;
+    background:rgba(15,13,11,0.7);
+    border:1px solid var(--line-hi);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .play svg{ width:11px; height:11px; fill:var(--ivory); margin-left:2px; }
+  .card-body{ padding:16px 18px 20px; }
+  .card-cat{ font-size:12px; color:var(--sage); margin:0 0 6px; }
+  .card-title{ font-size:17px; margin:0; font-weight:500; font-family:'Fraunces', serif; }
+  .card-note{ font-size:13px; color:var(--muted); margin:6px 0 0; line-height:1.5; }
+
+  .hidden{ display:none !important; }
+
+  /* ---------- about strip ---------- */
+  .about{
+    display:grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap:60px;
+    align-items:start;
+    background:var(--panel);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  @media (max-width:820px){ .about{ grid-template-columns:1fr; gap:32px; } }
+  .about h2{ font-size:clamp(24px,3vw,34px); margin:0 0 20px; }
+  .about p{ color:var(--muted); line-height:1.75; font-size:15.5px; margin:0 0 16px; }
+  .stat-list{ display:grid; grid-template-columns:1fr 1fr; gap:24px 32px; }
+  .stat{ border-top:1px solid var(--line); padding-top:14px; }
+  .stat .num{ font-family:'Fraunces', serif; font-size:30px; color:var(--brass); display:block; }
+  .stat .label{ font-size:13px; color:var(--muted); }
+
+  /* ---------- footer ---------- */
+  footer{
+    padding:56px clamp(20px,5vw,64px) 40px;
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;
+  }
+  footer .fbrand{ font-family:'Fraunces', serif; font-size:18px; }
+  footer .flinks{ display:flex; gap:24px; font-size:14px; color:var(--muted); }
+  footer .flinks a{ text-decoration:none; }
+  footer .flinks a:hover{ color:var(--ivory); }
+  footer .fnote{ width:100%; font-size:12.5px; color:#605a4f; border-top:1px solid var(--line); padding-top:20px; margin-top:16px; }
+
+  /* ---------- lightbox ---------- */
+  .lightbox{
+    position:fixed; inset:0; z-index:100;
+    background:rgba(8,7,6,0.94);
+    display:flex; align-items:center; justify-content:center;
+    padding:40px 20px;
+    opacity:0; pointer-events:none;
+    transition:opacity .25s;
+  }
+  .lightbox.open{ opacity:1; pointer-events:auto; }
+  .lb-inner{ max-width:1000px; width:100%; }
+  .lb-media{ width:100%; max-height:74vh; background:#000; display:flex; align-items:center; justify-content:center; }
+  .lb-media img, .lb-media video{ max-width:100%; max-height:74vh; width:auto; margin:0 auto; }
+  .lb-caption{ display:flex; justify-content:space-between; align-items:flex-start; gap:20px; margin-top:18px; }
+  .lb-caption h3{ margin:0 0 6px; font-size:20px; }
+  .lb-caption p{ margin:0; color:var(--muted); font-size:14px; max-width:52ch; line-height:1.6; }
+  .lb-close{
+    background:none; border:1px solid var(--line-hi); color:var(--ivory);
+    width:38px; height:38px; border-radius:50%; cursor:pointer; font-size:16px;
+    flex:none;
+  }
+  .lb-close:hover{ border-color:var(--brass); color:var(--brass); }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="brand">Nimavat<span>.</span>Visuals</div>
+  <div class="nav-links">
+    <a href="#work">Work</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<header class="hero">
+      <video id="heroVideo" autoplay muted loop playsinline preload="auto" poster="assets/posters/ice-cream.jpg">
+    <source src="Ice_cream_melting_with_brownie_202608120813_1.mp4" type="video/mp4">
+  </video>
+  <div class="hero-inner">
+    <div>
+      <h1 class="hero-title">Motion, color and AI-crafted film — built frame by frame.</h1>
+      <p class="hero-sub">Selected work in VFX compositing, cinematic color grading, retouching and AI-generated film for brands and independent projects.</p>
+    </div>
+    <div class="hero-meta">
+      <div><strong>Karan Nimavat</strong></div>
+      <div>Video Editor &amp; AI Filmmaker</div>
+      <div>Based in India</div>
+    </div>
+  </div>
+</header>
+
+<section id="work">
+  <div class="section-head">
+    <div>
+      <h2>Selected work</h2>
+      <p>Fifteen pieces spanning four disciplines — from rotoscoping to AI-generated spec campaigns.</p>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-filter="all">All work</button>
+    <button class="tab" data-filter="motion">Motion &amp; VFX</button>
+    <button class="tab" data-filter="color">Color &amp; Cinematography</button>
+    <button class="tab" data-filter="design">Design &amp; Retouch</button>
+    <button class="tab" data-filter="ai">AI Films</button>
+  </div>
+
+  <div class="grid" id="grid">
+
+    <!-- MOTION & VFX -->
+    <div class="card" data-cat="motion" data-type="video"
+         data-src="2d_logo_animation.mp4" data-poster="assets/posters/rolex-logo.jpg"
+         data-title="Logo Reveal Animation"
+         data-note="3D shadow-extrude logo intro with clean color transition, built in After Effects.">
+      <div class="thumb"><img src="assets/posters/rolex-logo.jpg" alt="Logo reveal animation"><div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+      <div class="card-body">
+        <p class="card-cat">Motion & VFX</p>
+        <h3 class="card-title">Logo Reveal Animation</h3>
+        <p class="card-note">3D shadow-extrude intro, After Effects.</p>
+      </div>
+    </div>
+
+    <div class="card" data-cat="motion" data-type="video"
+         data-src="motion_yt_final.mp4" data-poster="assets/posters/motion-yt.jpg"
+         data-title="Channel Intro — Motion Graphics"
+         data-note="Vector car animation with tracked stripe motion and kinetic typography for a YouTube intro.">
+      <div class="thumb"><img src="assets/posters/motion-yt.jpg" alt="YouTube channel intro"><div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+      <div class="card-body">
+        <p class="card-cat">Motion & VFX</p>
+        <h3 class="card-title">Channel Intro — Motion Graphics</h3>
+        <p class="card-note">Vector animation with kinetic type.</p>
+      </div>
+    </div>
+
+    <div class="card" data-cat="motion" data-type="video"
+         data-src="car_removed.mp4" data-poster="assets/posters/car-removed.jpg"
+         data-title="Object Removal — Roto & Clean-up"
+         data-note="Full vehicle removal from aerial footage, rebuilt background with no visible tracking artifacts.">
+      <div class="thumb"><img src="assets/posters/car-removed.jpg" alt="Object removal VFX"><div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+      <div class="card-body">
+        <p class="card-cat">Motion & VFX</p>
+        <h3 class="card-title">Object Removal — Roto &amp; Clean-up</h3>
+        <p class="card-note">Vehicle removed from aerial footage.</p>
+      </div>
+    </div>
+
+    <!-- COLOR & CINEMATOGRAPHY -->
+    <div class="card" data-cat="color" data-type="video"
+         data-src="wedding_trending_reel.mp4" data-poster="assets/posters/wedding-reel.jpg"
+         data-title="Bridal Reel — Cinematic Edit"
+         data-note="Stylised trending-format wedding reel: graphic transitions, cinematic crop and warm bridal grade.">
+      <div class="thumb"><img src="assets/posters/wedding-reel.jpg" alt="Wedding cinematic reel"><div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+      <div class="card-body">
+        <p class="card-cat">Color & Cinematography</p>
+        <h3 class="card-title">Bridal Reel — Cinematic Edit</h3>
+        <p class="card-note">Trending-format edit with warm grade.</p>
+      </div>
+    </div>
+
+    <div class="card" data-cat="color" data-type="video"
+         data-src="final_color_grade.mp4" data-poster="assets/posters/color-grade.jpg"
+         data-title="Portrait Color Grade"
+         data-note="Natural skin tones with cinematic bokeh separation, graded for a street portrait sequence.">
+      <div class="thumb"><img src="assets/posters/color-grade.jpg" alt="Portrait color grade"><div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+      <div class="card-body">
+        <p class="card-cat">Color & Cinematography</p>
+        <h3 class="card-title">Portrait Color Grade</h3>
+        <p class="card-note">Natural tones, cinematic separation.</p>
+      </div>
+    </div>
+
+    <div class="card" data-cat="color" data-type="image"
+         data-src="assets/images/grade-forest.jpg"
+         data-title="Forest Portrait — Before / After"
+         data-note="Golden-hour color shift bringing warmth into a flat overcast forest shoot.">
+      <div class="thumb"><img src="assets/images/grade-forest.jpg" alt="Forest portrait grade"></div>
+      <div class="card-body">
+        <p class="card-cat">Color & Cinematography</p>
+        <h3 class="card-title">Forest Portrait — Before / After</h3>
+        <p class="card-note">Golden-hour warmth grade.</p>
+      </div>
+    </div>
+
+    <div class="card" data-cat="color" data-type="image"
+         data-src="assets/images/grade-car.jpg"
+         data-title="Automotive — Before / After"
+         data-note="Dramatic dusk sky replacement and contrast pass on a flat, overcast source frame.">
+      <div class="thumb"><img src="assets/images/grade-car.jpg" alt="Car color grade"></div>
+      <div class="card-body">
+        <p class="card-cat">Color & Cinematography</p>
+        <h3 class="card-title">Automotive — Before / After</h3>
+        <p class="card-note">Dusk sky and contrast grade.</p>
+      </div>
+    </div>
+
+    <div class="card" data-cat="color" data-type="image"
+         data-src="assets/images/grade-ruins.jpg"
+         data-title="Editorial — Before / After"
+         data-note="Sky and mood correction against a rustic ruin backdrop for an editorial fashion set.">
+      <div class="thumb"><img src="assets/images/grade-ruins.jpg" alt="Editorial fashion grade"></div>
+      <div class="card-body">
+        <p class="card-cat">Color & Cinematography</p>
+        <h3 class="card-title">Editorial — Before / After</h3>
+        <p class="card-note">Sky and mood correction pass.</p>
+      </div>
+    </div>
+
+    <!-- DESIGN & RETOUCH -->
+    <div class="card wide" data-cat="design" data-type="image"
+         data-src="assets/images/bmw-m4.jpg"
+         data-title="BMW M4 — Spec Advertisement"
+         data-note="Studio composite and layout design for a fictional automotive spec ad.">
+      <div class="thumb"><img src="assets/images/bmw-m4.jpg" alt="BMW M4 spec ad"></div>
+      <div class="card-body">
+        <p class="card-cat">Design & Retouch</p>
+        <h3 class="card-title">BMW M4 — Spec Advertisement</h3>
+        <p class="card-note">Studio composite, spec-ad layout.</p>
+      </div>
+    </div>
+
+    <div class="card" data-cat="design" data-type="image"
+         data-src="assets/images/skincare.jpg"
+         data-title="Skin Detail — Close-up Retouch"
+         data-note="High-detail macro retouching study, preserving texture while balancing tone.">
+      <div class="thumb"><img src="assets/images/skincare.jpg" alt="Skincare close-up retouch"></div>
+      <div class="card-body">
+        <p class="card-cat">Design & Retouch</p>
+        <h3 class="card-title">Skin Detail — Close-up Retouch</h3>
+        <p class="card-note">Macro retouching, texture preserved.</p>
+      </div>
+    </div>
+
+        <div class="card" data-cat="design" data-type="image"
+         data-src="assets/images/neogen-gamer.jpg"
+         data-title="Neo-Gen Gamer — Magazine Cover"
+         data-note="Split-composition cover design for a fictional gaming magazine concept.">
+      <div class="thumb"><img src="assets/images/neogen-gamer.jpg" alt="Magazine cover design"></div>
+      <div class="card-body">
+        <p class="card-cat">Design & Retouch</p>
+        <h3 class="card-title">Neo-Gen Gamer — Magazine Cover</h3>
+        <p class="card-note">Split-composition cover concept.</p>
+      </div>
+    </div>
+
+    <!-- AI FILMS -->
+    <div class="card" data-cat="ai" data-type="video"
+         data-src="ai_filmed_watch_ad.mp4" data-poster="assets/posters/aeterna-watch.jpg"
+         data-title="Aeterna — Fictional Watch Campaign"
+         data-note="Fully AI-generated luxury watch spec campaign: consistent character, product and environment across cuts.">
+      <div class="thumb"><img src="assets/posters/aeterna-watch.jpg" alt="Aeterna watch AI campaign"><div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+      <div class="card-body">
+        <p class="card-cat">AI Films</p>
+        <h3 class="card-title">Aeterna — Fictional Watch Campaign</h3>
+        <p class="card-note">AI-generated luxury spec ad.</p>
+      </div>
+    </div>
+
+        <div class="card" data-cat="ai" data-type="video"
+         data-src="Ice_cream_melting_with_brownie_202608120813_1.mp4" data-poster="assets/posters/ice-cream.jpg"
+         data-title="Melt — AI Food Macro"
+         data-note="Photoreal AI-generated macro food sequence exploring texture, light and movement.">
+      <div class="thumb"><img src="assets/posters/ice-cream.jpg" alt="AI food macro"><div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+      <div class="card-body">
+        <p class="card-cat">AI Films</p>
+        <h3 class="card-title">Melt — AI Food Macro</h3>
+        <p class="card-note">Photoreal AI-generated macro study.</p>
+      </div>
+    </div>
+	
+    <div class="card" data-cat="ai" data-type="video"
+         data-src="Animate_text_on_image.mp4" data-poster="assets/posters/the-call.jpg"
+         data-title="The Call — Title Sequence"
+         data-note="Opening title design for an AI-generated cinematic short film.">
+      <div class="thumb"><img src="assets/posters/the-call.jpg" alt="The Call title sequence"><div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+      <div class="card-body">
+        <p class="card-cat">AI Films</p>
+        <h3 class="card-title">The Call — Title Sequence</h3>
+        <p class="card-note">Opening titles, AI short film.</p>
+      </div>
+    </div>
+
+    <div class="card" data-cat="ai" data-type="video"
+         data-src="ai_diamond_reel_final.mp4" data-poster="assets/posters/diamond-reel.jpg"
+         data-title="Model Comparison — Diamond Ring"
+         data-note="Same prompt run across three AI video models, compared side by side for lighting and material fidelity.">
+      <div class="thumb"><img src="assets/posters/diamond-reel.jpg" alt="AI model comparison reel"><div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+      <div class="card-body">
+        <p class="card-cat">AI Films</p>
+        <h3 class="card-title">Model Comparison — Diamond Ring</h3>
+        <p class="card-note">Three AI models, one prompt.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div style="padding:80px clamp(20px,5vw,64px);">
+    <h2>Editing since the timeline still fit on one monitor.</h2>
+    <p>I work across After Effects, Premiere Pro and Photoshop for traditional VFX, color grading and retouch — and increasingly with AI video models for spec campaigns and short-form film, treating each generation the way a DP treats a lens choice.</p>
+    <p>Every piece here is unpaid spec or personal work made to test a technique — object removal, model-to-model comparisons, a fictional brand built end to end — before offering it to a client.</p>
+  </div>
+  <div style="padding:80px clamp(20px,5vw,64px);">
+    <div class="stat-list">
+      <div class="stat"><span class="num">15</span><span class="label">Selected pieces</span></div>
+      <div class="stat"><span class="num">4</span><span class="label">Disciplines covered</span></div>
+      <div class="stat"><span class="num">3</span><span class="label">AI models tested head-to-head</span></div>
+      <div class="stat"><span class="num">1</span><span class="label">Fictional brand built from scratch</span></div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="fbrand">Nimavat Visuals</div>
+  <div class="flinks">
+    <a href="mailto:hello@example.com">Email</a>
+	<a href="https://wa.me/917405329050" target="_blank" rel="noopener">WhatsApp</a>
+    <a href="https://www.instagram.com/nimavatvisuals">Instagram</a>
+	<a href="#">Behance</a>
+  </div>
+  <!--<div class="fnote">Video files referenced here (.mp4) load from the same folder as this page — keep index.html, the assets folder and your original video files together when opening locally.</div>-->
+  <div class="fnote" style="border-top:none; padding-top:8px; margin-top:0;">Developed by Hemadri Nimavat</div>
+</footer>
+
+<div class="lightbox" id="lightbox">
+  <div class="lb-inner">
+    <div class="lb-media" id="lbMedia"></div>
+    <div class="lb-caption">
+      <div>
+        <h3 id="lbTitle"></h3>
+        <p id="lbNote"></p>
+      </div>
+      <button class="lb-close" id="lbClose">&times;</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ---------- Hero ice-cream video: always autoplay + loop ----------
+  const heroVideo = document.getElementById('heroVideo');
+  if (heroVideo) {
+    heroVideo.muted = true;
+    heroVideo.loop = true;
+    heroVideo.playsInline = true;
+    const tryPlayHero = () => {
+      heroVideo.play().catch(() => {});
+    };
+    tryPlayHero();
+    heroVideo.addEventListener('loadeddata', tryPlayHero);
+    heroVideo.addEventListener('pause', () => {
+      if (!document.hidden) tryPlayHero();
+    });
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) tryPlayHero();
+    });
+  }
+
+  // ---------- Filter tabs ----------
+  const tabs = document.querySelectorAll('.tab');
+  const cards = document.querySelectorAll('.card');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const f = tab.dataset.filter;
+      cards.forEach(c => {
+        c.classList.toggle('hidden', f !== 'all' && c.dataset.cat !== f);
+      });
+    });
+  });
+
+  // ---------- Lightbox: only play videos when a card is clicked ----------
+  const lightbox = document.getElementById('lightbox');
+  const lbMedia = document.getElementById('lbMedia');
+  const lbTitle = document.getElementById('lbTitle');
+  const lbNote = document.getElementById('lbNote');
+  const lbClose = document.getElementById('lbClose');
+
+  cards.forEach(card => {
+    card.addEventListener('click', () => {
+      const type = card.dataset.type;
+      const src = card.dataset.src;
+      lbMedia.innerHTML = '';
+
+      if (type === 'video') {
+        const v = document.createElement('video');
+        v.src = src;
+        v.controls = true;
+        v.autoplay = true;
+        v.muted = true;           // needed so autoplay is allowed
+        v.playsInline = true;
+        v.preload = 'auto';
+        v.poster = card.dataset.poster || '';
+        v.setAttribute('playsinline', '');
+        v.style.maxHeight = '74vh';
+        v.style.width = '100%';
+        v.style.objectFit = 'contain';
+
+        // unmute once playback starts so user hears audio
+        v.addEventListener('play', () => { v.muted = false; }, { once: true });
+
+        lbMedia.appendChild(v);
+        v.play().catch(() => {
+          // autoplay blocked — user can still press the play button
+        });
+      } else {
+        const img = document.createElement('img');
+        img.src = src;
+        lbMedia.appendChild(img);
+      }
+
+      lbTitle.textContent = card.dataset.title;
+      lbNote.textContent = card.dataset.note;
+      lightbox.classList.add('open');
+    });
+  });
+
+  function closeLightbox() {
+    const vid = lbMedia.querySelector('video');
+    if (vid) {
+      vid.pause();
+      vid.removeAttribute('src');
+      vid.load();
+    }
+    lightbox.classList.remove('open');
+    lbMedia.innerHTML = '';
+  }
+
+  lbClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+</script>
+</body>
+</html>
